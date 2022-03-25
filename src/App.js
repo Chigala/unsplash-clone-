@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Homepage } from "./components/homepage";
+import { ProgressPage } from "./components/progressPage";
+
+
+
+import { ImagePreview } from "./components/imagepreview";
+
+import { useSelector } from "react-redux";
 
 function App() {
+  
+  // const [uploadSuccess, setuploadSuccess] = useState(true)
+  // const [showLinear, setshowLinear] = useState(false);
+  // const [showPreview, setshowPreview] = useState(false)
+  
+  const success = useSelector((state)=> state.success.value)
+  const photoIsLoading = useSelector((state)=> state.photoIsLoading.value);
+  const successUpload = useSelector((state)=> state.uploadSuccess.value)
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+        <div>
+              {successUpload !== true?<Homepage/>: null}
+              {photoIsLoading < 100 || success !== true?
+              <ProgressPage/>: null}
+              
+              {photoIsLoading === 100 && success === true?<ImagePreview/>: null}
+              
+        </div>
+
   );
 }
 
